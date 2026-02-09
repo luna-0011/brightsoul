@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Daily Wisdom</title>
+  <meta name="theme-color" content="#bfdbfe" />
+  <link rel="stylesheet" href="./style.css" />
+  <script defer src="./script.js"></script>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="topbar">
+        <div class="brand">
+          <h1 class="hero-title" data-i18n="app_title">Daily Wisdom</h1>
+          <p class="hero-subtitle" data-i18n="app_subtitle">Sayings of The Prophet Muhammad ﷺ</p>
+        </div>
+        <div class="lang">
+          <label for="langSelect" class="lang-label" data-i18n="language_label">Language</label>
+          <select id="langSelect" class="lang-select" aria-label="Select language">
+            <option value="en">English</option>
+            <option value="it">Italiano</option>
+            <option value="fr">Français</option>
+            <option value="ar">العربية</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="errorBar" class="errorbar" hidden>
+        <div class="errorbar-text" id="errorText">Error</div>
+        <div class="errorbar-actions">
+          <a class="btn" id="reportLink" href="#" target="_blank" rel="noopener">Report</a>
+          <button class="btn" id="dismissError" type="button">×</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="main">
+    <section class="deck" aria-labelledby="deck-title">
+      <div class="deck-head">
+        <h2 id="deck-title" data-i18n="deck_title">Prophet Muhammad ﷺ</h2>
+        <div class="controls">
+          <button type="button" class="btn" data-action="prev" data-i18n-btn="btn_prev">◀</button>
+          <button type="button" class="btn primary" data-action="today" data-i18n-btn="btn_today">📅</button>
+          <button type="button" class="btn" data-action="next" data-i18n-btn="btn_next">▶</button>
+        </div>
+      </div>
+
+      <div class="deck-card" id="deck-profeta" aria-live="polite"></div>
+
+      <nav class="topics" aria-label="Other topics">
+        <h3 class="topics-title" data-i18n="topics_title">Other topics</h3>
+        <div class="topics-links">
+          <a class="topic-link" href="./parables.html" data-i18n="topic_parables">Parables</a>
+          <a class="topic-link" href="./science.html" data-i18n="topic_science">Science</a>
+          <a class="topic-link" href="./gratitude.html" data-i18n="topic_gratitude">Gratitude</a>
+        </div>
+      </nav>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p data-i18n="footer_body">Content in /data/*.json</p>
+  </footer>
+</body>
+</html>
