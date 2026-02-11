@@ -1,0 +1,517 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Islamic Wisdom Flashcards</title>
+
+    <style>
+  :root{
+    --ink:#0f1220;
+    --muted:#5f6472;
+
+    --bgA:#fbfbff;
+    --bgB:#f5f6ff;
+
+    --glass: rgba(255,255,255,.70);
+    --glass2: rgba(255,255,255,.55);
+    --stroke: rgba(15,18,32,.10);
+
+    --shadow: 0 22px 70px rgba(12,16,26,.10);
+    --shadow2: 0 14px 40px rgba(12,16,26,.08);
+
+    --radius: 26px;
+    --radius2: 18px;
+
+    --gold1: rgba(212,175,55,.35);
+    --gold2: rgba(212,175,55,.18);
+  }
+
+  *{ box-sizing:border-box; }
+  html,body{ height:100%; }
+
+  body{
+    margin:0;
+    color:var(--ink);
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+
+    /* Premium layered background + subtle Islamic-geometric vibe */
+    background:
+      radial-gradient(1100px 600px at 18% 0%, rgba(255,255,255,.95) 0%, var(--bgA) 40%, var(--bgB) 100%),
+      radial-gradient(900px 500px at 88% 10%, rgba(255,240,250,.75) 0%, transparent 60%),
+      radial-gradient(900px 520px at 75% 85%, rgba(240,255,250,.55) 0%, transparent 60%),
+      linear-gradient(180deg, rgba(255,255,255,.0), rgba(255,255,255,.0));
+    overflow-x:hidden;
+  }
+
+  /* Soft geometric overlay (no images) */
+  body::before{
+    content:"";
+    position:fixed;
+    inset:-40%;
+    pointer-events:none;
+    opacity:.18;
+    background:
+      radial-gradient(circle at 12px 12px, rgba(15,18,32,.09) 1px, transparent 1.3px),
+      radial-gradient(circle at 36px 36px, rgba(15,18,32,.06) 1px, transparent 1.3px);
+    background-size: 48px 48px;
+    transform: rotate(12deg);
+  }
+
+  .app{
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 18px 16px 34px;
+    display:flex;
+    flex-direction:column;
+    gap: 14px;
+  }
+
+  /* Header premium */
+  header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    padding: 10px 10px;
+    border: 1px solid var(--stroke);
+    border-radius: 20px;
+    background: linear-gradient(135deg, var(--glass) 0%, rgba(255,255,255,.50) 120%);
+    backdrop-filter: blur(14px);
+    box-shadow: var(--shadow2);
+    position:relative;
+    overflow:hidden;
+  }
+
+  /* Subtle gold filigree line */
+  header::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+    background:
+      linear-gradient(90deg, transparent 0%, var(--gold1) 18%, transparent 36%, var(--gold2) 52%, transparent 70%, var(--gold1) 86%, transparent 100%);
+    opacity:.45;
+    mix-blend-mode: multiply;
+  }
+
+  .brand{ display:flex; flex-direction:column; gap:4px; padding-left:4px; }
+  .brand h1{
+    margin:0;
+    font-size: 18px;
+    letter-spacing:.25px;
+    font-weight: 850;
+  }
+  .brand p{
+    margin:0;
+    color:var(--muted);
+    font-size: 12.5px;
+  }
+
+  .controls{
+    display:flex;
+    gap:10px;
+    align-items:center;
+    z-index:1;
+  }
+
+  select{
+    border:1px solid var(--stroke);
+    background: linear-gradient(135deg, rgba(255,255,255,.85), rgba(255,255,255,.55));
+    backdrop-filter: blur(12px);
+    border-radius: 14px;
+    padding: 10px 12px;
+    font-size: 13px;
+    outline:none;
+    box-shadow: 0 12px 28px rgba(12,16,26,.08);
+  }
+
+  .rows{
+    display:flex;
+    flex-direction:column;
+    gap: 10px;
+  }
+
+  .row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    align-items:center;
+    justify-content:center;
+    padding: 6px 2px;
+  }
+
+  /* Premium pills */
+  .pill{
+    border:1px solid var(--stroke);
+    background: linear-gradient(135deg, rgba(255,255,255,.80) 0%, rgba(255,255,255,.55) 120%);
+    backdrop-filter: blur(12px);
+    border-radius: 999px;
+    padding: 9px 12px;
+    font-size: 12.5px;
+    line-height: 1;
+    cursor:pointer;
+    user-select:none;
+    box-shadow: 0 12px 28px rgba(12,16,26,.07);
+    transition: transform .14s ease, box-shadow .14s ease, filter .14s ease;
+    white-space:nowrap;
+    position:relative;
+    overflow:hidden;
+  }
+
+  /* Soft sheen */
+  .pill::before{
+    content:"";
+    position:absolute;
+    top:-40%;
+    left:-30%;
+    width: 70%;
+    height: 180%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,.55), transparent);
+    transform: rotate(18deg);
+    opacity:.35;
+  }
+
+  .pill:hover{
+    transform: translateY(-1px);
+    box-shadow: 0 16px 40px rgba(12,16,26,.10);
+  }
+  .pill:active{
+    transform: translateY(0px);
+    filter: brightness(.98);
+  }
+  .pill.active{
+    outline: 2px solid rgba(15,18,32,.12);
+    box-shadow: 0 18px 48px rgba(12,16,26,.12);
+  }
+
+  .stage{
+    display:grid;
+    place-items:center;
+    padding: 10px 0 2px;
+  }
+
+  .cardWrap{
+    width: min(860px, 94vw);
+    height: min(480px, 60vh);
+    perspective: 1400px;
+  }
+
+  .card{
+    width:100%;
+    height:100%;
+    position:relative;
+    transform-style: preserve-3d;
+    transition: transform .60s cubic-bezier(.2,.85,.2,1);
+    cursor:pointer;
+    user-select:none;
+  }
+  .card.flipped{ transform: rotateY(180deg); }
+
+  .face{
+    position:absolute;
+    inset:0;
+    border-radius: var(--radius);
+    overflow:hidden;
+    backface-visibility:hidden;
+    border: 1px solid rgba(15,18,32,.10);
+    box-shadow: var(--shadow);
+  }
+
+  /* Card front: premium texture + title */
+  .front{
+    display:grid;
+    place-items:center;
+    padding: 26px;
+    position:relative;
+  }
+
+  /* Front subtle geometric motif */
+  .front::before{
+    content:"";
+    position:absolute;
+    inset:-10%;
+    background:
+      radial-gradient(circle at 20px 20px, rgba(255,255,255,.25) 2px, transparent 2.6px),
+      radial-gradient(circle at 44px 44px, rgba(255,255,255,.18) 2px, transparent 2.6px);
+    background-size: 64px 64px;
+    opacity:.35;
+    transform: rotate(8deg);
+  }
+
+  /* Gold halo behind title */
+  .front::after{
+    content:"";
+    position:absolute;
+    width: 420px;
+    height: 260px;
+    border-radius: 999px;
+    background:
+      radial-gradient(closest-side, rgba(212,175,55,.28), transparent 70%);
+    filter: blur(2px);
+    opacity:.55;
+  }
+
+  .front .title{
+    position:relative;
+    z-index:1;
+    font-size: clamp(22px, 3.2vw, 38px);
+    font-weight: 900;
+    letter-spacing:.25px;
+    text-align:center;
+    color: rgba(10,12,18,.92);
+    text-shadow: 0 1px 0 rgba(255,255,255,.35);
+  }
+
+  .front .hint{
+    position:absolute;
+    bottom: 18px;
+    left: 18px;
+    right: 18px;
+    text-align:center;
+    font-size: 12.2px;
+    color: rgba(10,12,18,.70);
+    z-index:1;
+  }
+
+  /* Back: clean editorial with corner color + top ribbon */
+  .back{
+    transform: rotateY(180deg);
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.96), rgba(255,255,255,.92));
+    padding: 22px;
+    display:flex;
+    flex-direction:column;
+    gap: 14px;
+    position:relative;
+  }
+
+  /* back top ribbon */
+  .back::before{
+    content:"";
+    position:absolute;
+    left:0; right:0; top:0;
+    height: 10px;
+    background: linear-gradient(90deg, transparent, rgba(212,175,55,.35), transparent);
+    opacity:.65;
+  }
+
+  .corner{
+    position:absolute;
+    width: 92px;
+    height: 92px;
+    opacity: .95;
+    filter: saturate(1.03);
+  }
+  .corner.tl{ top:0; left:0; border-bottom-right-radius: 92px; }
+  .corner.tr{ top:0; right:0; border-bottom-left-radius: 92px; }
+  .corner.bl{ bottom:0; left:0; border-top-right-radius: 92px; }
+  .corner.br{ bottom:0; right:0; border-top-left-radius: 92px; }
+
+  .meta{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    padding: 4px 2px 0;
+    z-index:2;
+  }
+
+  .badge{
+    font-size: 12px;
+    padding: 7px 10px;
+    border-radius: 999px;
+    border:1px solid var(--stroke);
+    background: rgba(255,255,255,.88);
+    box-shadow: 0 10px 22px rgba(12,16,26,.06);
+  }
+
+  .count{
+    color: var(--muted);
+    font-size: 12px;
+  }
+
+  /* ✅ FIX: qui prima avevi HTML dentro al CSS (rompeva tutta la pagina) */
+  blockquote{
+    margin: 0;
+    padding: 0;
+    font-size: clamp(16px, 2.2vw, 23px);
+    line-height: 1.55;
+    z-index:2;
+    position:relative;
+  }
+
+  /* quote mark flourish */
+  blockquote::before{
+    content:"“";
+    position:absolute;
+    left:-10px;
+    top:-20px;
+    font-size: 52px;
+    color: rgba(212,175,55,.22);
+    font-weight: 900;
+  }
+
+  /* Divider between quote and method */
+  #divider{
+    z-index:2;
+    opacity:.55;
+    text-align:center;
+    font-size:18px;
+    letter-spacing:2px;
+    color: rgba(212,175,55,.55);
+    margin: 2px 0 2px;
+    user-select:none;
+  }
+
+  .ref{
+    color: var(--muted);
+    font-size: 12.5px;
+    z-index:2;
+  }
+
+  .method{
+    margin-top:auto;
+    border-radius: 18px;
+    border:1px solid rgba(15,18,32,.10);
+    padding: 12px 12px;
+    background:
+      linear-gradient(135deg, rgba(255,255,255,.80), rgba(250,250,255,.55));
+    box-shadow: 0 12px 28px rgba(12,16,26,.06);
+    z-index:2;
+    position:relative;
+    overflow:hidden;
+  }
+
+  .method::before{
+    content:"";
+    position:absolute;
+    inset:-20%;
+    background:
+      radial-gradient(circle at 22px 22px, rgba(212,175,55,.16) 2px, transparent 2.8px),
+      radial-gradient(circle at 56px 56px, rgba(212,175,55,.10) 2px, transparent 2.8px);
+    background-size: 84px 84px;
+    opacity:.35;
+    transform: rotate(10deg);
+  }
+
+  .method h3{
+    margin:0 0 6px 0;
+    font-size: 12px;
+    letter-spacing:.4px;
+    text-transform: uppercase;
+    color: rgba(12,16,26,.64);
+    position:relative;
+    z-index:1;
+  }
+  .method p{
+    margin:0;
+    font-size: 14px;
+    line-height: 1.5;
+    position:relative;
+    z-index:1;
+  }
+
+  .footerTip{
+    text-align:center;
+    color: var(--muted);
+    font-size: 12.5px;
+    padding-top: 8px;
+  }
+
+  /* RTL handling */
+  [dir="rtl"] .brand,
+  [dir="rtl"] .footerTip,
+  [dir="rtl"] .front .hint,
+  [dir="rtl"] blockquote,
+  [dir="rtl"] .ref,
+  [dir="rtl"] .method p{
+    direction: rtl;
+    text-align: right;
+  }
+  [dir="rtl"] .meta{ direction: rtl; }
+  [dir="rtl"] blockquote::before{
+    content:"”";
+    left:auto;
+    right:-10px;
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce){
+    .card{ transition:none; }
+    .pill{ transition:none; }
+  }
+
+  @media (max-width: 520px){
+    header{ padding: 10px 10px; }
+    .pill{ font-size: 12px; padding: 9px 11px; }
+    .corner{ width: 80px; height: 80px; }
+  }
+</style>
+  </head>
+
+  <body>
+    <div class="app" id="appRoot">
+      <header>
+        <div class="brand">
+          <h1 id="appTitle">Islamic Wisdom Flashcards</h1>
+          <p id="appSubtitle">Tap a topic/category → tap the card to flip → swipe through wisdom without repeats.</p>
+        </div>
+        <div class="controls">
+          <select id="langSelect" aria-label="Language">
+            <option value="en">English</option>
+            <option value="it">Italiano</option>
+            <option value="fr">Français</option>
+            <option value="ar">العربية</option>
+          </select>
+        </div>
+      </header>
+
+      <div class="rows">
+        <div class="row" id="topicsRow"></div>
+
+        <div class="stage">
+          <div class="cardWrap">
+            <div class="card" id="flashcard" role="button" aria-label="Flashcard" tabindex="0">
+              <div class="face front" id="cardFront">
+                <div class="title" id="frontTitle">Select a category</div>
+                <div class="hint" id="frontHint">Tap to flip • Next quote auto-advances when you pick a button</div>
+              </div>
+
+              <div class="face back" id="cardBack">
+                <div class="corner tl" id="cTL"></div>
+                <div class="corner tr" id="cTR"></div>
+                <div class="corner bl" id="cBL"></div>
+                <div class="corner br" id="cBR"></div>
+
+                <div class="meta">
+                  <div class="badge" id="backBadge">—</div>
+                  <div class="count" id="backCount">0/0</div>
+                </div>
+
+                <blockquote id="quoteText">—</blockquote>
+                <div class="ref" id="quoteRef">—</div>
+
+                <!-- ✅ spostato qui (prima era dentro al CSS e rompeva l'HTML) -->
+                <div id="divider" aria-hidden="true">۞</div>
+
+                <div class="method" id="methodBox" hidden>
+                  <h3 id="methodTitle">Practical method</h3>
+                  <p id="methodText"></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row" id="categoriesRow"></div>
+      </div>
+
+      <div class="footerTip" id="footerTip">
+        Tip: Progress is saved per category and language, so you don’t see repeats until you finish the deck.
+      </div>
+    </div>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
